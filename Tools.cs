@@ -1,4 +1,7 @@
-﻿namespace zsh_ultra
+﻿using System.Diagnostics;
+using System.Text;
+
+namespace zsh_ultra
 {
     internal static class Tools
     {
@@ -29,6 +32,36 @@
                 ColorWriteLine(ex.Message, ConsoleColor.DarkRed);
                 return string.Empty;
             }
+        }
+
+        public static string? RunCMDCommand(string command)
+        {
+            var psInfo = new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                StandardErrorEncoding = Encoding.UTF8,
+                StandardOutputEncoding = Encoding.UTF8,
+                UseShellExecute = false,
+                FileName = @"powershell.exe",
+                Arguments = command
+            };
+
+            using var psProcess = new Process() { StartInfo = psInfo };
+            psProcess.Start();
+            var output = psProcess.StandardOutput.ReadToEnd();
+            if (output == null)
+            {
+                var error = psProcess.StandardError.ReadToEnd();
+                ColorWrite(error, ConsoleColor.DarkRed);
+                psProcess.WaitForExit();
+                psProcess.Close();
+                return null;
+            }
+            psProcess.WaitForExit();
+            psProcess.Close();
+            return output.ReplaceLineEndings(string.Empty);
         }
     }
 }
