@@ -8,4 +8,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="LICENSE.md" />
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="LICENSE.md" />
+    <Content Include="README.md" />
+  </ItemGroup>
+
 </Project>
