@@ -77,16 +77,16 @@ namespace zsh_ultra
                 terminal.WaitForExit();
                 terminal.Close();
             }
-            catch (NullReferenceException)
+            catch (ApplicationException)
             {
-                throw new NullReferenceException("Cascading to main call...") { Source = nameof(terminalInfo.processInfo) };
+                throw new ApplicationException("Cascading to main call...") { Source = nameof(terminalInfo.processInfo) };
             }
         }
 
         private Process InitializeChildProcess()
         {
             var terminal = new Process { StartInfo = terminalInfo.processInfo ?? 
-                                         throw new NullReferenceException("Null process info for the terminal. Starting exception cascade...")
+                                         throw new ApplicationException("Null process info for the terminal. Starting exception cascade...")
                                        { Source = nameof(terminalInfo.processInfo) } };
             terminal.OutputDataReceived += OutputHandler;
             terminal.ErrorDataReceived += ErrorHandler;
