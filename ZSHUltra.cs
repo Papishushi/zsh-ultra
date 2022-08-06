@@ -12,8 +12,8 @@ namespace zsh_ultra
 		private readonly StringBuilder outputBuilder = new();
 		private readonly StringBuilder errorBuilder = new();
 		private int inputLineCount, oldInputLineCount = -1;
-		private bool hasInput = true;
-		private bool outputDone = false;
+		private volatile bool hasInput = true;
+		private volatile bool outputDone = false;
 		//Thread safety IDisposable
 		private volatile bool disposedValue;
 
@@ -32,7 +32,8 @@ namespace zsh_ultra
 		public void StartTerminal()
 		{
 			if (disposedValue) throw new ObjectDisposedException(ToString() + " " + terminalInfo?.FileName);
-			using var wslProcess = InitializeChildProcess();
+            Console.CancelKeyPress += CancelKeyPressHandler;
+			using var terminal = InitializeChildProcess();
 			Tools.ColorWriteLine("Welcome to ZSH ULTRA powered by .NET", ConsoleColor.DarkMagenta);
 			do
 			{
@@ -43,14 +44,14 @@ namespace zsh_ultra
 
 					if ((tOutput != string.Empty || tError != string.Empty) && hasInput && outputDone)
 					{
-						hasInput = false;
-						outputDone = false;
 						if (tOutput != string.Empty)
 							Tools.ColorWrite($"{tOutput}", ConsoleColor.DarkBlue);
 						else if (tError != string.Empty)
 							Tools.ColorWrite($"{tError}", ConsoleColor.DarkRed);
-						outputBuilder.Length = 0;
-						errorBuilder.Length = 0;
+						hasInput = false;
+						outputDone = false;
+						outputBuilder.Clear();
+						errorBuilder.Clear();
 					}
 					else if (inputLineCount != 0 && hasInput) continue;
 				}
@@ -64,25 +65,31 @@ namespace zsh_ultra
 				var input = Console.ReadLine();
 				if (string.IsNullOrEmpty(input)) continue;
 				hasInput = true;
-				InputTechniqueToStdin(wslProcess, input);
-				wslProcess.StandardInput.Flush();
+				InputTechniqueToStdin(terminal, input);
+				terminal.StandardInput.Flush();
 				inputLineCount++;
 			}
-			while (!wslProcess.HasExited);
-			wslProcess.WaitForExit();
-			wslProcess.Close();
+			while (!terminal.HasExited);
+			terminal.WaitForExit();
+			terminal.Close();
 		}
 
 		private Process InitializeChildProcess()
 		{
-			var wslProcess = new Process { StartInfo = terminalInfo ?? throw new NullReferenceException() { Source = nameof(terminalInfo) } };
-			wslProcess.OutputDataReceived += OutputHandler;
-			wslProcess.ErrorDataReceived += ErrorHandler;
-			wslProcess.Start();
-			wslProcess.StandardInput.NewLine = "\n";
-			wslProcess.BeginOutputReadLine();
-			wslProcess.BeginErrorReadLine();
-			return wslProcess;
+			var terminal = new Process { StartInfo = terminalInfo ?? throw new NullReferenceException() { Source = nameof(terminalInfo) } };
+			terminal.OutputDataReceived += OutputHandler;
+			terminal.ErrorDataReceived += ErrorHandler;
+			terminal.Start();
+			terminal.StandardInput.NewLine = "\n";
+			terminal.BeginOutputReadLine();
+			terminal.BeginErrorReadLine();
+			return terminal;
+		}
+
+		private void CancelKeyPressHandler(object sendingProcess, ConsoleCancelEventArgs args)
+		{
+			outputDone = true;
+			args.Cancel = true;
 		}
 
 		private void OutputHandler(object sendingProcess, DataReceivedEventArgs e)

@@ -36,7 +36,7 @@ namespace zsh_ultra
 
         public static string? RunCMDCommand(string command)
         {
-            var psInfo = new ProcessStartInfo
+            var cmdInfo = new ProcessStartInfo
             {
                 CreateNoWindow = true,
                 RedirectStandardError = true,
@@ -44,23 +44,23 @@ namespace zsh_ultra
                 StandardErrorEncoding = Encoding.UTF8,
                 StandardOutputEncoding = Encoding.UTF8,
                 UseShellExecute = false,
-                FileName = @"powershell.exe",
-                Arguments = command
+                FileName = @"CMD.exe",
+                Arguments = "/C " + command
             };
 
-            using var psProcess = new Process() { StartInfo = psInfo };
-            psProcess.Start();
-            var output = psProcess.StandardOutput.ReadToEnd();
+            using var cmdProcess = new Process() { StartInfo = cmdInfo };
+            cmdProcess.Start();
+            var output = cmdProcess.StandardOutput.ReadToEnd();
             if (output == null)
             {
-                var error = psProcess.StandardError.ReadToEnd();
+                var error = cmdProcess.StandardError.ReadToEnd();
                 ColorWrite(error, ConsoleColor.DarkRed);
-                psProcess.WaitForExit();
-                psProcess.Close();
+                cmdProcess.WaitForExit();
+                cmdProcess.Close();
                 return null;
             }
-            psProcess.WaitForExit();
-            psProcess.Close();
+            cmdProcess.WaitForExit();
+            cmdProcess.Close();
             return output.ReplaceLineEndings(string.Empty);
         }
     }
