@@ -5,14 +5,14 @@ namespace zsh_ultra
 {
     internal static class Tools
     {
-        public static void ColorWriteLine(string text, ConsoleColor color)
+        public static void ColorWriteLine(object text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ResetColor();
         }
 
-        public static void ColorWrite(string text, ConsoleColor color)
+        public static void ColorWrite(object text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.Write(text);
