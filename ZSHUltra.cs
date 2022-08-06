@@ -5,7 +5,7 @@ namespace zsh_ultra
 {
 	internal class ZSHUltra : IDisposable
 	{
-		public static ZSHUltra? Singleton { get; private set; }
+		public static object? Singleton { get; private set; }
 		private readonly ProcessStartInfo? terminalInfo;
 		//Thread safety StringBuilder
 		private readonly object builderLock = new();
@@ -86,10 +86,10 @@ namespace zsh_ultra
 			return terminal;
 		}
 
-		private void CancelKeyPressHandler(object sendingProcess, ConsoleCancelEventArgs args)
+		private void CancelKeyPressHandler(object? sendingProcess, ConsoleCancelEventArgs args)
 		{
-			outputDone = true;
-			args.Cancel = true;
+			outputDone = hasInput;
+            args.Cancel = true;
 		}
 
 		private void OutputHandler(object sendingProcess, DataReceivedEventArgs e)
