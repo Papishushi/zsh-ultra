@@ -77,7 +77,7 @@ namespace zsh_ultra
                 terminal.WaitForExit();
                 terminal.Close();
             }
-            catch
+            catch (NullReferenceException)
             {
                 throw new NullReferenceException("Cascading to main call...") { Source = nameof(terminalInfo.processInfo) };
             }
