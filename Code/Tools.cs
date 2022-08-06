@@ -27,8 +27,9 @@ namespace zsh_ultra
                 var temp = Console.ReadLine();
                 return temp != null ? temp.Trim('"') : throw new ArgumentNullException(temp);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
+                Console.WriteLine("Exception:");
                 ColorWriteLine(ex.Message, ConsoleColor.DarkRed);
                 return string.Empty;
             }

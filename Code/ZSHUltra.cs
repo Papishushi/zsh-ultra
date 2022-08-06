@@ -33,7 +33,7 @@ namespace zsh_ultra
         }
         public void StartTerminal()
         {
-            if (disposedValue) throw new ObjectDisposedException(ToString() + " " + terminalInfo.processInfo?.FileName);
+            if (disposedValue) throw new ObjectDisposedException($"{this} {terminalInfo.processInfo?.FileName}");
             Console.CancelKeyPress += CancelKeyPressHandler;
             try
             {
@@ -77,7 +77,7 @@ namespace zsh_ultra
                 terminal.WaitForExit();
                 terminal.Close();
             }
-            catch (Exception e)
+            catch
             {
                 throw new NullReferenceException("Cascading to main call...") { Source = nameof(terminalInfo.processInfo) };
             }
@@ -139,9 +139,8 @@ namespace zsh_ultra
         protected virtual void Dispose(bool disposing)
         {
             if (disposedValue) return;
-            if (disposing)
-                if (Singleton == this)
-                    Singleton = null;
+            if (disposing && ReferenceEquals(Singleton, this))
+                Singleton = null;
             disposedValue = true;
         }
         public void Dispose()

@@ -2,7 +2,7 @@
 
 using (var terminal = new ZSHUltra())
 {
-    var mainTask = new Task(terminal.StartTerminal);
+    using var mainTask = new Task(terminal.StartTerminal);
     mainTask.ContinueWith(ExceptionHandler, TaskContinuationOptions.OnlyOnFaulted);
     mainTask.Start();
     mainTask.Wait();

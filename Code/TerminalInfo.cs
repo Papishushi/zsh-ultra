@@ -5,7 +5,7 @@ using zsh_ultra;
 struct TerminalInfo
 {
     public ProcessStartInfo? processInfo;
-    public PlatformID platform;
+    public readonly PlatformID platform;
     public string name;
 
     public TerminalInfo()
