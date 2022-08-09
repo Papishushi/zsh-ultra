@@ -6,7 +6,7 @@ DOTNET=$DOTNET_ROOT/dotnet
 TEMP=$HOME/tempfilesinstaller
 
 #Make directory to contain all temp files.
-mkdir -pm 644 $TEMP
+mkdir -pm 744 $TEMP
 
 #Get ZSH-Ultra source code compressed on '.zip' format from github
 wget https://github.com/Papishushi/zsh-ultra/archive/refs/heads/master.zip -P $TEMP
@@ -52,7 +52,7 @@ fi
 
 #Build program from source code and move to destination path
 $DOTNET build --configuration Release $TEMP/zsh-ultra-master/
-mkdir -pm 644 $HOME/.zshultra
+mkdir -pm 744 $HOME/.zshultra
 mv $TEMP/zsh-ultra-master/bin/Release/net6.0/* $HOME/.zshultra
 rm -rf $TEMP
 
