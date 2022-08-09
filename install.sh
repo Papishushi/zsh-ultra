@@ -4,32 +4,22 @@
 DOTNET_ROOT=$HOME/.dotnet
 DOTNET=$DOTNET_ROOT/dotnet
 TEMP=$HOME/tempfilesinstaller
-ZSH-ULTRA=$HOME/".ZSH-Ultra"
+ZSH-ULTRA=$HOME/.zshultra
 
 #Set PATH
-PATH=$PATH:$DOTNET_ROOT
+export PATH=$PATH:$DOTNET_ROOT
 export PATH=$PATH:$ZSH-ULTRA
 
 #Make directory to contain all temp files.
 mkdir -pm a+wrx $TEMP
-
-if ! hash $DOTNET 2>/dev/null; then
-	#Get .NET file installer, then install last version of .NET (Currently .NET 6)
-	wget https://dot.net/v1/dotnet-install.sh -P $TEMP
-	./$TEMP/dotnet-install.sh -c Current
-
-	#Remove .NET file installer
-	rm -rf $TEMP/dotnet-install.sh
-fi
 
 #Get ZSH-Ultra source code compressed on '.zip' format from github
 wget https://github.com/Papishushi/zsh-ultra/archive/refs/heads/master.zip -P $TEMP
 
 #If unzip command is not installed then setup our own unzip enviromnent
 if ! hash unzip 2>/dev/null; then
-	#Check for python
+	#Check for python3
 	if ! hash python3 2>/dev/null; then
-		#Install Python making use of pyenv
 		#If there is no install of pyenv install it
 		echo "Installing python dependencies..."
 		if ! hash $HOME/.pyenv/bin/pyenv 2>/dev/null; then
@@ -40,7 +30,7 @@ if ! hash unzip 2>/dev/null; then
 			eval \"\$(pyenv init -)\"
 			eval \"\$(pyenv virtualenv-init -)\"" >> ~/.zshrc
 		fi
-		#Check for python updates and install the latest
+		#Check for python3 updates and install the latest
 		$HOME/.pyenv/bin/pyenv update && $HOME/.pyenv/bin/pyenv install 3:latest
 		python3 -V
 	fi
@@ -54,6 +44,16 @@ echo -e "\nUnzipping source...\n"
 unzip $TEMP/master.zip
 #Remove .zip file
 rm -rf $TEMP/master.zip
+
+#Check if DOTNET is installed
+if ! hash $DOTNET 2>/dev/null; then
+	#Get .NET file installer, then install last version of .NET (Currently .NET 6)
+	wget https://dot.net/v1/dotnet-install.sh -P $TEMP
+	./$TEMP/dotnet-install.sh -c Current
+
+	#Remove .NET file installer
+	rm -rf $TEMP/dotnet-install.sh
+fi
 
 #Build program from source code and move to destination path
 $DOTNET build --configuration Release $TEMP/zsh-ultra-master/
