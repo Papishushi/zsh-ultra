@@ -17,7 +17,7 @@ Follow the steps above to install this program with install.sh :
 ## Remarks:
 wget is a requierement for the installer, so if you are going to use it, you need to sudo install it like this:
 
-     apt-get install wget
+     sudo apt-get install wget
 
 To use this program you must install the .NET runtime using sudo. 
 I dont want to include a sudo command on the installer so you must do it by yourself.
