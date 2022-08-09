@@ -11,5 +11,5 @@ using (var terminal = new ZSHUltra())
 static void ExceptionHandler(Task task)
 {
     Console.WriteLine("Exception:");
-    Tools.ColorWriteLine(task.Exception, ConsoleColor.DarkRed);
+    Tools.ColorWriteLine(task.Exception == null ? "Null Agreggate Exception" : task.Exception, ConsoleColor.DarkRed);
 }

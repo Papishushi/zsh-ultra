@@ -49,7 +49,7 @@ namespace zsh_ultra
                         if ((tOutput != string.Empty || tError != string.Empty) && hasInput && outputDone)
                         {
                             if (tOutput != string.Empty)
-                                Tools.ColorWrite($"{tOutput}", ConsoleColor.DarkBlue);
+                                Tools.ColorWrite($"{tOutput}", ConsoleColor.Gray);
                             else if (tError != string.Empty)
                                 Tools.ColorWrite($"{tError}", ConsoleColor.DarkRed);
                             hasInput = false;
@@ -60,11 +60,10 @@ namespace zsh_ultra
                         else if (inputLineCount != 0 && hasInput) continue;
                     }
 
-                    if (oldInputLineCount == inputLineCount +-1)
+                    if (oldInputLineCount == inputLineCount +- 1)
                     {
                         oldInputLineCount = inputLineCount;
-                        Tools.ColorWrite($"[{inputLineCount}]-[{Environment.UserName}@{Environment.UserDomainName}]-$ ",
-                                ConsoleColor.DarkCyan);
+                        InputHeader();
                     }
                     var input = Console.ReadLine();
                     if (string.IsNullOrEmpty(input)) continue;
@@ -121,6 +120,19 @@ namespace zsh_ultra
             outputDone = true;
             lock (builderLock)
                 errorBuilder?.Append(e.Data.Replace("zsh", "zsh-ultra") + Environment.NewLine);
+        }
+
+        protected virtual void InputHeader()
+        {
+            Tools.ColorWrite("[", ConsoleColor.DarkCyan);
+            Tools.ColorWrite($"{inputLineCount}", ConsoleColor.Gray);
+            Tools.ColorWrite("]", ConsoleColor.DarkCyan);
+            Tools.ColorWrite("-", ConsoleColor.Gray);
+            Tools.ColorWrite("[", ConsoleColor.DarkCyan);
+            Tools.ColorWrite($"{Environment.UserName}@{Environment.UserDomainName}", ConsoleColor.Gray);
+            Tools.ColorWrite("]", ConsoleColor.DarkCyan);
+            Tools.ColorWrite("-", ConsoleColor.Gray);
+            Tools.ColorWrite("$", ConsoleColor.DarkYellow);
         }
 
         private static void InputTechniqueToStdin(Process terminalProcess, string input)
