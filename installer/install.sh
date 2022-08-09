@@ -6,10 +6,6 @@ DOTNET=$DOTNET_ROOT/dotnet
 TEMP=$HOME/tempfilesinstaller
 ZSH-ULTRA=$HOME/.zshultra
 
-#Set PATH
-export PATH=$PATH:$DOTNET_ROOT
-export PATH=$PATH:$ZSH-ULTRA
-
 #Make directory to contain all temp files.
 mkdir -pm a+wrx $TEMP
 
@@ -63,3 +59,6 @@ rm -rf $TEMP
 
 #Display installation path
 echo -e "\nZSH-Ultra Path: ${ZSH-ULTRA}"
+
+#Set PATH
+export PATH=$PATH:$DOTNET_ROOT
