@@ -84,7 +84,7 @@ namespace zsh_ultra
 
         private Process InitializeChildProcess()
         {
-            var terminal = new Process { StartInfo = terminalInfo.processInfo ?? 
+            var terminal = new Process { StartInfo = terminalInfo.processInfo ??
                                          throw new ApplicationException("Null process info for the terminal. Starting exception cascade...")
                                        { Source = nameof(terminalInfo.processInfo) } };
             terminal.OutputDataReceived += OutputHandler;
