@@ -31,12 +31,12 @@ if ! hash unzip 2>/dev/null; then
 		python3 -V
 	fi
 	#Set unzip environment
-	echo -e "\nSetting unzip tool..."
+	echo "\nSetting unzip tool..."
 	unzip(){ python3 -c "from zipfile import ZipFile; ZipFile( '''$1''' ).extractall('$TEMP')"; }
 fi
 
 #Unzip source code
-echo -e "\nUnzipping source...\n"
+echo "\nUnzipping source...\n"
 unzip $TEMP/master.zip
 #Remove .zip file
 rm -rf $TEMP/master.zip
@@ -58,7 +58,7 @@ mv $TEMP/zsh-ultra-master/bin/Release/net6.0/* $ZSH-ULTRA
 rm -rf $TEMP
 
 #Display installation path
-echo -e "\nZSH-Ultra Path: ${ZSH-ULTRA}"
+echo "\nZSH-Ultra Path: ${ZSH-ULTRA}"
 
 #Set PATH
-export PATH=$PATH:$DOTNET_ROOT
+echo $PATH | grep -q "\(^\|:\)$DOTNET_ROOT\(:\|/\{0,1\}$\)" || echo "PATH=\$PATH:$DOTNET_ROOT" >> "~/.zshrc"; source "~/.zshrc"
