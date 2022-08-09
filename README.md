@@ -14,7 +14,7 @@ On development multiplatform GNU CLI powered by .NET, based on zsh.
 
 ### Now that we are sure everything is safe, run the script.
 
-     sh -c "$(wget -O- https://raw.githubusercontent.com/Papishushi/zsh-ultra/master/installer/install.sh)" 
+     zsh -c "$(wget -O- https://raw.githubusercontent.com/Papishushi/zsh-ultra/master/installer/install.sh)" 
      
 ### Remarks:
 wget is a requierement for the installer, so if you are going to use it, you need to sudo install it like this:
