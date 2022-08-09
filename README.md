@@ -43,7 +43,7 @@ or manually download the repo then unzip-it using unzip command or another comma
     
 ### Move compiled program to $HOME/.zshultra and do some cleanup
 
-    mkdir -pm 644 $HOME/.zshultra
+    mkdir -pm 755 $HOME/.zshultra
     mv zsh-ultra-master/bin/Release/net6.0/* $HOME/.zshultra
     rm -rf master.zip
     rm -rf zsh-ultra-master
