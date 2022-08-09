@@ -59,4 +59,4 @@ rm -rf $TEMP
 #Display installation path
 echo "\nZSH-Ultra Path: $HOME/.zshultra"
 #Set PATH
-echo $PATH | grep -q "\(^\|:\)$DOTNET_ROOT\(:\|/\{0,1\}$\)" || echo "PATH=$PATH:$DOTNET_ROOT" >> ~/.zshrc; . ~/.zshrc
+echo $PATH | grep -q "\(^\|:\)$DOTNET_ROOT\(:\|/\{0,1\}$\)" || echo "PATH=$PATH:$DOTNET_ROOT" >> ~/.zshrc; source ~/.zshrc
