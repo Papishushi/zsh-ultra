@@ -4,7 +4,6 @@
 DOTNET_ROOT=$HOME/.dotnet
 DOTNET=$DOTNET_ROOT/dotnet
 TEMP=$HOME/tempfilesinstaller
-ZSH-ULTRA=$HOME/.zshultra
 
 #Make directory to contain all temp files.
 mkdir -pm a+wrx $TEMP
@@ -53,6 +52,7 @@ fi
 
 #Build program from source code and move to destination path
 $DOTNET build --configuration Release $TEMP/zsh-ultra-master/
+ZSH-ULTRA=$HOME/.zshultra
 mkdir -pm a+wrx $ZSH-ULTRA
 mv $TEMP/zsh-ultra-master/bin/Release/net6.0/* $ZSH-ULTRA
 rm -rf $TEMP
@@ -60,4 +60,4 @@ rm -rf $TEMP
 #Display installation path
 echo "\nZSH-Ultra Path: ${ZSH-ULTRA}"
 #Set PATH
-echo $PATH | grep -q "\(^\|:\)$DOTNET_ROOT\(:\|/\{0,1\}$\)" || echo "PATH=\$PATH:$DOTNET_ROOT" >> ~/.zshrc; . ~/.zshrc
+echo $PATH | grep -q "\(^\|:\)$DOTNET_ROOT\(:\|/\{0,1\}$\)" || echo "PATH=$PATH:$DOTNET_ROOT" >> ~/.zshrc; . ~/.zshrc
