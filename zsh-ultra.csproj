@@ -11,11 +11,13 @@
   <ItemGroup>
     <None Remove="LICENSE.md" />
     <None Remove="README.md" />
+    <None Remove="install.sh" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="LICENSE.md" />
     <Content Include="README.md" />
+    <Content Include="install.sh" />
   </ItemGroup>
 
 </Project>
