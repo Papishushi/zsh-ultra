@@ -54,7 +54,7 @@ struct TerminalInfo
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardInputEncoding = Encoding.UTF8,
                     UseShellExecute = false,
-                    FileName = @$"/home/{Environment.UserName}/.zshrc",
+                    FileName = @$"zsh",
                     WorkingDirectory = @$"/home/{Environment.UserName}/"
                 };
                 return temp;
@@ -70,7 +70,7 @@ struct TerminalInfo
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardInputEncoding = Encoding.UTF8,
                     UseShellExecute = false,
-                    FileName = @$"~/.zshrc",
+                    FileName = @$"zsh",
                     WorkingDirectory = @$"~/"
                 };
                 return temp;
@@ -103,7 +103,7 @@ struct TerminalInfo
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardInputEncoding = Encoding.UTF8,
                     UseShellExecute = false,
-                    FileName = @$"/home/{Environment.UserName}/.zshrc",
+                    FileName = @$"/home/{Environment.UserName}/.zsh",
                     WorkingDirectory = @$"/home/{Environment.UserName}/"
                 };
                 return temp;
