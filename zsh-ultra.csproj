@@ -11,12 +11,14 @@
   <ItemGroup>
     <None Remove="LICENSE.md" />
     <None Remove="README.md" />
+    <None Remove="Installing_ZSH.md" />
     <None Remove="install.sh" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="LICENSE.md" />
     <Content Include="README.md" />
+    <Content Include="Installing_ZSH.md" />
     <Content Include="install.sh" />
   </ItemGroup>
 
